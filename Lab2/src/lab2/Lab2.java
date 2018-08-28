@@ -14,52 +14,41 @@ import java.util.Scanner;
  * @author lndavis6
  */
 public class Lab2 {
-    static String[] records;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Please enter the filename:");
-        java.util.Scanner keyboard = new java.util.Scanner(System.in);
-        String filename = keyboard.next();
-        java.util.Scanner entei = new java.util.Scanner(filename);
-        int currentIndex = 0;
+        String [] record = new String[100];
         try{
             Scanner reader = new Scanner(new File(args[0]));
-        }
-        catch (FileNotFoundException ex) {
-            System.err.println("Failed to read input file.");
-        }
-        while(entei.hasNext()){
-            String [] line = entei.nextLine().split(",");
-            verify(line);
-            String firstName = line[0];
-            String lastName = line[1];
-            String age = line[2];
-            String gender = line[3];
-            String phoneNumber = line[4];
-            String email = line[5];
-            
-            records[currentIndex] = String.format("%-20s%-20s%-10s%10d%20d%-20s", firstName, lastName, gender, age, phoneNumber, email);
-            
-            currentIndex++;
-        
-        }
-        for(int i = 0; i <= currentIndex; i++){
-            System.out.println(records[i]);
-        }
-            
-        
-        
-    }
-
-    public static void verify(String[] line) {
-            for(int i = 0; i <= line.length; i++){
-            
+            int index = 0;
+            while(reader.hasNext()){
+                String [] line = reader.nextLine().split(",");
+                String fName = line[0];
+                String lName = line[1];
+                String age = line[2];
+                String gender = line[3];
+                String pNumber = line[4];
+                String email = line[5];
+                
+                record[index] = String.format("");
+                
+                index++;
+                
+                String result;
+                result = String.format("%-20s%-20s%-10s%10s%-15s%-30s", fName, lName, age, gender, pNumber, email);
+                System.out.println(result);
             }
+        
+        }
+        catch(FileNotFoundException ex){
+            System.err.println("Failed to read file");
+        }
+    
+    }
             
     }
 
   
     
-}
+
