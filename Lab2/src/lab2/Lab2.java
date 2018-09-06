@@ -28,20 +28,21 @@ public class Lab2 {
                 String[] line = reader.nextLine().split(",");
                 String fName = line[0];
                 String lName = line[1];
-                String age = line[2];
-                String gender = line[3];
+                String age = line[3];
+                String gender = line[2];
                 String pNumber = line[4];
                 String email = line[5];
 
                 if (verify1(fName, lName) && verify2(gender) && verify3(age) && verify4(pNumber) && verify5(email)) {
                     String result;
-                    result = String.format("%-20s%-20s%-10s%10s%-15s%-30s", fName, lName, age, gender, pNumber, email);
+                    result = String.format("%-20s%-20s%-20s%-10s%-30s%-20s", fName, lName, gender, age, pNumber, email);
                     System.out.println(result);
                     index++;
                 }
+                else{
 
-                System.err.println(lName + " is not a valid record");
-
+                System.out.print("");
+                }
             }
 
         } catch (FileNotFoundException ex) {
@@ -82,21 +83,19 @@ public class Lab2 {
      * @return
      */
     public static boolean verify2(String sex) {
-        if (sex.equalsIgnoreCase("male")) {
-            return true;
+        boolean tell = true;
+        if (sex.equalsIgnoreCase("MALE")) {
+            tell = true;
         }
-        if (sex.equalsIgnoreCase("female")) {
-            return true;
+        else if (sex.equalsIgnoreCase("FEMALE")) {
+            tell = true;
         }
-        return false;
+       
+        return tell;
+         
     }
 
-    /**
-     *
-     * @param age inputs a string that parses to a number that should be between
-     * 1 and 130
-     * @return
-     */
+
     public static boolean verify3(String age) {
         boolean tell = true; //changes based on whether the strings have numbers in them or not
         try {
@@ -104,28 +103,32 @@ public class Lab2 {
             if (ageInt < 1 || ageInt > 130) {
                 tell = false;
             }
-        } catch (NumberFormatException ex) {
+        } 
+        catch (NumberFormatException ex) {
             tell = false;
         }
         return tell;
     }
 
-    /**
-     *
-     * @param pNumber inputs...
-     * @return
-     */
+
     public static boolean verify4(String pNumber) {
-        boolean tell = true; //changes based on whether the strings have numbers in them or not
-        try {
-            int pNum = Integer.parseInt(pNumber);
-            if (pNum != 10) {
-                tell = false;
+        int length = pNumber.length();
+        int count = 0;
+        for(int h = 0; h<length; h++){
+            char temp = pNumber.charAt(h);
+            if(Character.isDigit(temp)){
+                count++;
             }
-        } catch (NumberFormatException exo) {
-            tell = false;
+            
         }
-        return tell;
+        if(count == 10){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+            
     }
 
     /**
@@ -139,16 +142,16 @@ public class Lab2 {
         String[] emails = email.split("");
         if (!Character.isLetter(email.charAt(0))) {
             tell = false;
-        } else {
-
+        } 
+      
             for (int o = 0; o < emails.length; o++) {
 
 //               if (!Character.isLetter(emails[o]) && !Character.isDigit(emails[0]) && !emails[o].equals(".") && !emails[o].equals("@")){
-                if (!emails[o].contentEquals("[a-zA-Z1234567890@.]")) {
-                    tell = false;
+                if (emails[o].contentEquals("[a-zA-Z1234567890@.]")) {
+                    tell = true;
                 }
 
-            }
+            
 
         }
         return tell;
